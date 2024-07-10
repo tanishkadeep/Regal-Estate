@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <header className="bg-slate-200 shadow-md overflow-hidden">
-      <div className="flex justify-between items-center max-w-6xl py-3 mx-auto px-3 sm:px-10 gap-2">
+      <div className="flex justify-between items-center max-w-6xl p-4 mx-auto sm:px-10 gap-2">
         <Link to="/">
           <h1 className="font-bold text-lg sm:text-2xl">
             <span className="text-slate-500">Regal</span>
