@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Signup() {
+export default function Signin() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export default function Signup() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      
+
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
@@ -35,7 +35,7 @@ export default function Signup() {
       }
       setLoading(false);
       setError(null);
-      navigate("/signin");
+      navigate("/");
     } catch (error: any) {
       setLoading(false);
       setError(error.message);
@@ -55,13 +55,7 @@ export default function Signup() {
           id="username"
           onChange={handleChange}
         />
-        <input
-          type="email"
-          placeholder="email"
-          className="border p-3 rounded-lg"
-          id="email"
-          onChange={handleChange}
-        />
+
         <input
           type="password"
           placeholder="password"
@@ -79,9 +73,9 @@ export default function Signup() {
       </form>
 
       <div className="flex gap-2 mt-3 justify-center items-center font-medium">
-        <div>Have an account?</div>
-        <Link to={"/"}>
-          <span className="text-blue-700 hover:underline">Sign in</span>
+        <div>Don't have an account?</div>
+        <Link to={"/signup"}>
+          <span className="text-blue-700 hover:underline">Sign up</span>
         </Link>
       </div>
       {error && (
