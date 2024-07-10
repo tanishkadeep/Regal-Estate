@@ -1,7 +1,9 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRouter from "../routes/user.route"
+import userRouter from "../routes/user.route";
+import authRouter from "../routes/auth.route";
+import cors = require("cors");
 
 dotenv.config();
 
@@ -17,7 +19,26 @@ mongoose
 const app: Express = express();
 const port = 3000;
 
-app.use("/api/user", userRouter)
+app.use(express.json());
+app.use(cors());
+
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
+
+interface CustomError extends Error {
+  statusCode?: number;
+}
+
+app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+
+  return res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message,
+  });
+});
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
