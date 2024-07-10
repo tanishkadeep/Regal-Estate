@@ -78,34 +78,10 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const signinSchema = z.object({
-  username: z.string(),
-  password: z
-    .string()
-    .min(8, "Your password needs to be at least 8 characters long."),
-});
-
 const signin = async (req: Request, res: Response, next: NextFunction) => {
-  const body = req.body;
+  const { username, password } = req.body;
 
   try {
-    const response = signinSchema.safeParse(body);
-
-    if (!response.success) {
-      const errorMessages = response.error.errors.map((err) => ({
-        path: err.path,
-        message: err.message,
-      }));
-
-      return res.status(411).json({
-        success: false,
-        statusCode: 411,
-        message: errorMessages[0].message,
-      });
-    }
-
-    const { username, password } = body;
-
     const user = await User.findOne({
       username,
     });

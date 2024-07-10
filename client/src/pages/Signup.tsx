@@ -35,7 +35,7 @@ export default function Signup() {
       }
       setLoading(false);
       setError(null);
-      navigate("/signin");
+      navigate("/");
     } catch (error: any) {
       setLoading(false);
       setError(error.message);
@@ -72,7 +72,7 @@ export default function Signup() {
 
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80 font-semibold"
+          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80 font-semibold mt-3"
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
@@ -80,7 +80,7 @@ export default function Signup() {
 
       <div className="flex gap-2 mt-3 justify-center items-center font-medium">
         <div>Have an account?</div>
-        <Link to={"/"}>
+        <Link to={"/signin"}>
           <span className="text-blue-700 hover:underline">Sign in</span>
         </Link>
       </div>
