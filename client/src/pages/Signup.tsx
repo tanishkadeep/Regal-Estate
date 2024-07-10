@@ -27,6 +27,7 @@ export default function Signup() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
@@ -42,7 +43,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="px-16 max-w-lg mx-auto">
+    <div className="px-16 max-w-lg mx-auto my-24">
       <h1 className="text-3xl sm:text-4xl text-center font-extrabold my-7">
         Sign Up
       </h1>
@@ -71,16 +72,16 @@ export default function Signup() {
 
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80 font-semibold"
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
       </form>
 
-      <div className="flex gap-2 mt-3 justify-center items-center">
+      <div className="flex gap-2 mt-3 justify-center items-center font-medium">
         <div>Have an account?</div>
         <Link to={"/signin"}>
-          <span className="text-blue-700">Sign in</span>
+          <span className="text-blue-700 hover:underline">Sign in</span>
         </Link>
       </div>
       {error && (

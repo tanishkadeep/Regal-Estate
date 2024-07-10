@@ -9,8 +9,10 @@ dotenv.config();
 
 const signupSchema = z.object({
   username: z.string(),
-  email: z.string().email(),
-  password: z.string().min(6),
+  email: z.string().email("Invalid Email"),
+  password: z
+    .string()
+    .min(8, "Your password needs to be at least 8 characters long."),
 });
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
@@ -18,10 +20,15 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
   const response = signupSchema.safeParse(body);
 
   if (!response.success) {
+    const errorMessages = response.error.errors.map((err) => ({
+      path: err.path,
+      message: err.message,
+    }));
+
     return res.status(411).json({
       success: false,
       statusCode: 411,
-      message: "Incorrect credentials",
+      message: errorMessages[0].message,
     });
   }
 
