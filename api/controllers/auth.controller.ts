@@ -3,9 +3,6 @@ import bcryptjs from "bcryptjs";
 import User from "../models/user.model";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const signupSchema = z.object({
   username: z.string(),
@@ -66,16 +63,82 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 
     const userId = newUser._id;
 
-    const SECRET_KEY = process.env.JWT_SECRET_KEY || "secretKey";
-    const token = jwt.sign({ userId }, SECRET_KEY);
+    const token = jwt.sign(
+      { userId },
+      process.env.JWT_SECRET_KEY || "secretKey"
+    );
 
-    res.json({
+    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
+      username: newUser.username,
+      email: newUser.email,
       message: "User created successfully",
-      token,
     });
   } catch (error) {
     next(error);
   }
 };
 
-export default signup;
+const signinSchema = z.object({
+  username: z.string(),
+  password: z
+    .string()
+    .min(8, "Your password needs to be at least 8 characters long."),
+});
+
+const signin = async (req: Request, res: Response, next: NextFunction) => {
+  const body = req.body;
+
+  try {
+    const response = signinSchema.safeParse(body);
+
+    if (!response.success) {
+      const errorMessages = response.error.errors.map((err) => ({
+        path: err.path,
+        message: err.message,
+      }));
+
+      return res.status(411).json({
+        success: false,
+        statusCode: 411,
+        message: errorMessages[0].message,
+      });
+    }
+
+    const { username, password } = body;
+
+    const user = await User.findOne({
+      username,
+    });
+
+    if (!user) {
+      res.status(411).json({
+        success: false,
+        statusCode: 404,
+        message: "User not found!",
+      });
+    } else {
+      const validPassword = bcryptjs.compareSync(password, user.password);
+      if (!validPassword) {
+        res.status(411).json({
+          success: false,
+          statusCode: 401,
+          message: "Wrong credentials!",
+        });
+      }
+
+      const token = jwt.sign(
+        { id: user._id },
+        process.env.JWT_SECRET_KEY || "secretKey"
+      );
+
+      res.cookie("access_token", token, { httpOnly: true }).status(200).json({
+        username: user.username,
+        email: user.email,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { signup, signin };
