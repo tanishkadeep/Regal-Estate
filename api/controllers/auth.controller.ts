@@ -72,6 +72,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
       username: newUser.username,
       email: newUser.email,
       avatar: newUser.avatar,
+      id: newUser._id,
       message: "User created successfully",
     });
   } catch (error) {
@@ -112,6 +113,7 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
         username: user.username,
         email: user.email,
         avatar: user.avatar,
+        id: user._id,
       });
     }
   } catch (error) {
@@ -132,6 +134,7 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
         username: user.username,
         email: user.email,
         avatar: user.avatar,
+        id: user._id,
       });
     } else {
       const generatedPassword =
@@ -157,6 +160,7 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
         username: newUser.username,
         email: newUser.email,
         avatar: newUser.avatar,
+        id: newUser._id,
       });
     }
   } catch (error) {
