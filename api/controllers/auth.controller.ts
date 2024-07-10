@@ -19,20 +19,37 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 
   if (!response.success) {
     return res.status(411).json({
-      message: "Incorrect inputs",
+      success: false,
+      statusCode: 411,
+      message: "Incorrect credentials",
     });
   }
 
   const { username, email, password } = body;
 
-  const existingUser = await User.findOne({
+  const existingUserEmail = await User.findOne({
     email,
   });
 
-  if (existingUser)
+  if (existingUserEmail) {
     res.status(411).json({
+      success: false,
+      statusCode: 411,
       message: "Email already taken",
     });
+  }
+
+  const existingUsername = await User.findOne({
+    username,
+  });
+
+  if (existingUsername) {
+    res.status(411).json({
+      success: false,
+      statusCode: 411,
+      message: "Username already taken",
+    });
+  }
 
   const hashedPassword = bcryptjs.hashSync(password, 10);
 
