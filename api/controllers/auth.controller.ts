@@ -71,6 +71,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
     res.cookie("access_token", token, { httpOnly: true }).status(200).json({
       username: newUser.username,
       email: newUser.email,
+      avatar: newUser.avatar,
       message: "User created successfully",
     });
   } catch (error) {
@@ -110,6 +111,7 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
       res.cookie("access_token", token, { httpOnly: true }).status(200).json({
         username: user.username,
         email: user.email,
+        avatar: user.avatar,
       });
     }
   } catch (error) {
@@ -129,6 +131,7 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
       res.cookie("access_token", token, { httpOnly: true }).status(200).json({
         username: user.username,
         email: user.email,
+        avatar: user.avatar,
       });
     } else {
       const generatedPassword =
@@ -153,6 +156,7 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
       res.cookie("access_token", token, { httpOnly: true }).status(200).json({
         username: newUser.username,
         email: newUser.email,
+        avatar: newUser.avatar,
       });
     }
   } catch (error) {
