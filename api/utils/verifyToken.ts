@@ -1,4 +1,4 @@
-import jwt, { VerifyErrors, JwtPayload } from "jsonwebtoken";
+import jwt, { VerifyErrors } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { errorHandler } from "./error";
 

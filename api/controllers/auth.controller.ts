@@ -64,7 +64,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
     const userId = newUser._id;
 
     const token = jwt.sign(
-      { userId },
+      { id: userId },
       process.env.JWT_SECRET_KEY || "secretKey"
     );
 
