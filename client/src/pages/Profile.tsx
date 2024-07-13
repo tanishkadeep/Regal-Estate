@@ -20,6 +20,7 @@ import {
   signOutUserStart,
 } from "../redux/user/userSlice";
 import { Link } from "react-router-dom";
+import { ListingInterface } from "../utills/types";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector(
@@ -32,24 +33,7 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [showListingsError, setShowListingsError] = useState(false);
-  const [userListings, setUserListings] = useState<Listing[]>([]);
-
-  interface Listing {
-    name: String;
-    description: String;
-    address: Listing;
-    regularPrice: Number;
-    discountPrice: Number;
-    bathrooms: Number;
-    bedrooms: Number;
-    furnished: Boolean;
-    parking: Boolean;
-    type: String;
-    offer: Boolean;
-    imageUrls: Array<string>;
-    userRef: String;
-    _id: String;
-  }
+  const [userListings, setUserListings] = useState<ListingInterface[]>([]);
 
   const dispatch = useDispatch();
 
