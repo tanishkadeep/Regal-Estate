@@ -78,4 +78,22 @@ const getUserListings = async (
   }
 };
 
-export { updateUser, deleteUser, getUserListings };
+const getUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) return next(errorHandler(404, "User not found!"));
+
+    res.status(200).json({
+      username: user?.username,
+      email: user?.email,
+      password: user?.password,
+      avatar: user?.avatar,
+      id: user?._id,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { updateUser, deleteUser, getUserListings, getUser };
