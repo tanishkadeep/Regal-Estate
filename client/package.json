@@ -20,6 +20,7 @@
     "react-router-dom": "^6.24.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
+    "regal-estates": "file:..",
     "swiper": "^11.1.4"
   },
   "devDependencies": {
