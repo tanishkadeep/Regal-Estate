@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListingItem from "../components/ListingItem";
+import { ListingInterface } from "../utills/types";
 
 export default function Search() {
   const navigate = useNavigate();
@@ -15,9 +16,8 @@ export default function Search() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [listings, setListings] = useState([]);
-  console.log(listings);
-  console.log(loading);
+  const [listings, setListings] = useState<ListingInterface[]>([]);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -51,9 +51,17 @@ export default function Search() {
 
     const fetchListings = async () => {
       setLoading(true);
+      setShowMore(false);
       const searchQuery = urlParams.toString();
       const res = await fetch(`/api/listing/get?${searchQuery}`);
       const data = await res.json();
+
+      if (data.length > 8) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
+
       setListings(data);
       setLoading(false);
     };
@@ -96,6 +104,20 @@ export default function Search() {
     urlParams.set("order", sidebardata.order);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
+  };
+
+  const onShowMoreClick = async () => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex.toString());
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const data = await res.json();
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+    setListings([...listings, ...data]);
   };
 
   return (
@@ -209,23 +231,31 @@ export default function Search() {
           Listing results:
         </h1>
 
-        <div className='p-7 flex flex-wrap gap-4'>
+        <div className="p-7 flex flex-wrap gap-4">
           {!loading && listings.length === 0 && (
-            <p className='text-xl text-slate-700 font-semibold'>No listing found!</p>
+            <p className="text-xl text-slate-700 font-semibold">
+              No listing found!
+            </p>
           )}
           {loading && (
-            <p className='text-xl text-slate-700 text-center w-full font-semibold'>
+            <p className="text-xl text-slate-700 text-center w-full font-semibold">
               Loading...
             </p>
           )}
 
           {!loading &&
             listings &&
-            listings.map((listing) => (
-              <ListingItem listing={listing} />
-            ))}
+            listings.map((listing) => <ListingItem listing={listing} />)}
+
+          {showMore && (
+            <button
+              onClick={onShowMoreClick}
+              className="text-green-700 hover:underline p-7 text-center w-full font-bold text-lg mb-10"
+            >
+              Show more
+            </button>
+          )}
         </div>
-        
       </div>
     </div>
   );
