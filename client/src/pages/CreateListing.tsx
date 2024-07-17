@@ -9,6 +9,7 @@ import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
+import { BACKEND_URL } from "../config";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -154,7 +155,7 @@ export default function CreateListing() {
       setLoading(true);
       setError("");
 
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`${BACKEND_URL}/api/listing/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

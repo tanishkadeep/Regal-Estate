@@ -21,6 +21,7 @@ import {
 } from "../redux/user/userSlice";
 import { Link } from "react-router-dom";
 import { ListingInterface } from "../utills/types";
+import { BACKEND_URL } from "../config";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector(
@@ -76,7 +77,7 @@ export default function Profile() {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser?.id}`, {
+      const res = await fetch(`${BACKEND_URL}/api/user/update/${currentUser?.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +100,7 @@ export default function Profile() {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser?.id}`, {
+      const res = await fetch(`${BACKEND_URL}/api/user/delete/${currentUser?.id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -116,7 +117,7 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch("/api/auth/signout");
+      const res = await fetch("${BACKEND_URL}/api/auth/signout");
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -148,7 +149,7 @@ export default function Profile() {
 
   const handleListingDelete = async (listingId: String) => {
     try {
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
+      const res = await fetch(`${BACKEND_URL}/api/listing/delete/${listingId}`, {
         method: "DELETE",
       });
       const data = await res.json();

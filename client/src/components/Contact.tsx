@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ListingInterface } from "../utills/types";
+import { BACKEND_URL } from "../config";
 
 interface ContactProps {
   listing: ListingInterface;
@@ -24,7 +25,7 @@ export default function Contact({ listing }: ContactProps) {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        const res = await fetch(`/api/user/${listing.userRef}`);
+        const res = await fetch(`${BACKEND_URL}/api/user/${listing.userRef}`);
         const data = await res.json();
         setLandlord(data);
       } catch (error) {
