@@ -24,7 +24,8 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'https://regal-estate.vercel.app',
+  origin: "https://regal-estate.vercel.app",
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -34,6 +35,8 @@ app.use(cookieParser());
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
+
+app.options("*", cors(corsOptions));
 
 interface CustomError extends Error {
   statusCode?: number;
