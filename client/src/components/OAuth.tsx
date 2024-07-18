@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
+import { FaGoogle } from "react-icons/fa";
 
 export default function OAuth() {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export default function OAuth() {
 
       const res = await fetch(`${BACKEND_URL}/api/auth/google`, {
         method: "POST",
-        credentials: 'include',
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -39,8 +40,9 @@ export default function OAuth() {
     <button
       onClick={handleGoogleClick}
       type="button"
-      className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-90 font-medium"
+      className="flex items-center justify-center gap-3 bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-90 font-medium"
     >
+      <FaGoogle />
       Continue with google
     </button>
   );
