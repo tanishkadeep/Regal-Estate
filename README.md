@@ -41,7 +41,7 @@ Welcome to Regal Estate, a comprehensive real estate marketplace built using the
 
 ## 🛠️ Tech Stack
 
-- Backend - `Node.js` `Express` `Zod` `JWT` `MongoDB` `Typescript` `Firebase` `bcrypt.js`
+- Backend - `Node.js` `Express` `Zod` `JWT` `MongoDB` `Typescript` `Firebase` `bcryptjs`
 
 - Frontend - `React.js` `Vite` `Tailwind CSS`
 
