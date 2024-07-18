@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
@@ -34,7 +34,9 @@ export default function Listing() {
     const fetchListing = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${BACKEND_URL}/api/listing/get/${params.listingId}`);
+        const res = await fetch(
+          `${BACKEND_URL}/api/listing/get/${params.listingId}`
+        );
         const data = await res.json();
         if (data.success === false) {
           setError(true);
@@ -150,6 +152,18 @@ export default function Listing() {
                 Contact landlord
               </button>
             )}
+
+            {!currentUser && !contact && (
+              <Link
+                to="/signin"
+                className="bg-slate-700 text-white rounded-lg text-center p-3"
+              >
+                <button className="uppercase hover:opacity-90 font-medium">
+                  Sign in to contact landlord
+                </button>
+              </Link>
+            )}
+
             {contact && <Contact listing={listing} />}
           </div>
         </div>

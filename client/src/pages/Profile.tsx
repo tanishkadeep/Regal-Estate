@@ -77,13 +77,16 @@ export default function Profile() {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`${BACKEND_URL}/api/user/update/${currentUser?.id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${BACKEND_URL}/api/user/update/${currentUser?.id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
@@ -100,9 +103,12 @@ export default function Profile() {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`${BACKEND_URL}/api/user/delete/${currentUser?.id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${BACKEND_URL}/api/user/delete/${currentUser?.id}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
@@ -117,7 +123,7 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch("${BACKEND_URL}/api/auth/signout");
+      const res = await fetch(`${BACKEND_URL}/api/auth/signout`);
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -133,7 +139,9 @@ export default function Profile() {
     try {
       setShowListingsError(false);
 
-      const res = await fetch(`/api/user/listings/${currentUser?.id}`);
+      const res = await fetch(
+        `${BACKEND_URL}/api/user/listings/${currentUser?.id}`
+      );
 
       const data = await res.json();
       if (data.success === false) {
@@ -149,9 +157,12 @@ export default function Profile() {
 
   const handleListingDelete = async (listingId: String) => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/listing/delete/${listingId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${BACKEND_URL}/api/listing/delete/${listingId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);
