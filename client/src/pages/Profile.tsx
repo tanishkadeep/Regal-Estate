@@ -81,6 +81,7 @@ export default function Profile() {
         `${BACKEND_URL}/api/user/update/${currentUser?.id}`,
         {
           method: "POST",
+          credentials: 'include',
           headers: {
             "Content-Type": "application/json",
           },
@@ -107,6 +108,7 @@ export default function Profile() {
         `${BACKEND_URL}/api/user/delete/${currentUser?.id}`,
         {
           method: "DELETE",
+          credentials: 'include',
         }
       );
       const data = await res.json();
@@ -161,6 +163,7 @@ export default function Profile() {
         `${BACKEND_URL}/api/listing/delete/${listingId}`,
         {
           method: "DELETE",
+          credentials: 'include',
         }
       );
       const data = await res.json();

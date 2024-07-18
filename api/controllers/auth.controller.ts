@@ -68,13 +68,20 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
       process.env.JWT_SECRET_KEY || "secretKey"
     );
 
-    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-      username: newUser.username,
-      email: newUser.email,
-      avatar: newUser.avatar,
-      id: newUser._id,
-      message: "User created successfully",
-    });
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+      })
+      .status(200)
+      .json({
+        username: newUser.username,
+        email: newUser.email,
+        avatar: newUser.avatar,
+        id: newUser._id,
+        message: "User created successfully",
+      });
   } catch (error) {
     next(error);
   }
@@ -130,12 +137,19 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
         process.env.JWT_SECRET_KEY || "secretKey"
       );
 
-      res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
-        id: user._id,
-      });
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
+        .status(200)
+        .json({
+          username: user.username,
+          email: user.email,
+          avatar: user.avatar,
+          id: user._id,
+        });
     } else {
       const generatedPassword =
         Math.random().toString(36).slice(-8) +
@@ -156,12 +170,19 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
         process.env.JWT_SECRET_KEY || "secretKey"
       );
 
-      res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-        username: newUser.username,
-        email: newUser.email,
-        avatar: newUser.avatar,
-        id: newUser._id,
-      });
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
+        .status(200)
+        .json({
+          username: newUser.username,
+          email: newUser.email,
+          avatar: newUser.avatar,
+          id: newUser._id,
+        });
     }
   } catch (error) {
     next(error);
