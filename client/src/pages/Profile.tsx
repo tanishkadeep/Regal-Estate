@@ -146,7 +146,11 @@ export default function Profile() {
       const res = await fetch(
         `${BACKEND_URL}/api/user/listings/${currentUser?.id}`,
         {
+          method: "GET",
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
 

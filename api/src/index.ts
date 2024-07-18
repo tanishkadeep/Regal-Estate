@@ -24,8 +24,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'https://regal-estate.vercel.app', // replace with your frontend URL
-  credentials: true,
+  origin: 'https://regal-estate.vercel.app',
 };
 
 app.use(cors(corsOptions));
