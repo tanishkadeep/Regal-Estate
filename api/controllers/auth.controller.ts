@@ -73,6 +73,8 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
         httpOnly: true,
         sameSite: "none",
         secure: true,
+        domain: "regal-estates.onrender.com",
+        path: "/",
       })
       .status(200)
       .json({
@@ -142,6 +144,8 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
           httpOnly: true,
           sameSite: "none",
           secure: true,
+          domain: "regal-estates.onrender.com",
+          path: "/",
         })
         .status(200)
         .json({
@@ -175,6 +179,8 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
           httpOnly: true,
           sameSite: "none",
           secure: true,
+          domain: "regal-estates.onrender.com",
+          path: "/",
         })
         .status(200)
         .json({
