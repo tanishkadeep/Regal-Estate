@@ -40,7 +40,9 @@ export default function CreateListing() {
   useEffect(() => {
     const fetchListing = async () => {
       const listingId = params.listingId;
-      const res = await fetch(`${BACKEND_URL}/api/listing/get/${listingId}`);
+      const res = await fetch(`${BACKEND_URL}/api/listing/get/${listingId}`, {
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);
@@ -173,17 +175,20 @@ export default function CreateListing() {
       setLoading(true);
       setError("");
 
-      const res = await fetch(`${BACKEND_URL}/api/listing/update/${params.listingId}`, {
-        method: "POST",
-        credentials: 'include',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          userRef: currentUser?.id,
-        }),
-      });
+      const res = await fetch(
+        `${BACKEND_URL}/api/listing/update/${params.listingId}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            userRef: currentUser?.id,
+          }),
+        }
+      );
 
       const data = await res.json();
       setLoading(false);

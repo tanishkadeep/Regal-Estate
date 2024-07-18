@@ -81,7 +81,7 @@ export default function Profile() {
         `${BACKEND_URL}/api/user/update/${currentUser?.id}`,
         {
           method: "POST",
-          credentials: 'include',
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -108,7 +108,7 @@ export default function Profile() {
         `${BACKEND_URL}/api/user/delete/${currentUser?.id}`,
         {
           method: "DELETE",
-          credentials: 'include',
+          credentials: "include",
         }
       );
       const data = await res.json();
@@ -125,7 +125,9 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch(`${BACKEND_URL}/api/auth/signout`);
+      const res = await fetch(`${BACKEND_URL}/api/auth/signout`, {
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -142,7 +144,10 @@ export default function Profile() {
       setShowListingsError(false);
 
       const res = await fetch(
-        `${BACKEND_URL}/api/user/listings/${currentUser?.id}`
+        `${BACKEND_URL}/api/user/listings/${currentUser?.id}`,
+        {
+          credentials: "include",
+        }
       );
 
       const data = await res.json();
@@ -163,7 +168,7 @@ export default function Profile() {
         `${BACKEND_URL}/api/listing/delete/${listingId}`,
         {
           method: "DELETE",
-          credentials: 'include',
+          credentials: "include",
         }
       );
       const data = await res.json();

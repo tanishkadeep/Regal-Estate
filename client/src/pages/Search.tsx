@@ -54,7 +54,10 @@ export default function Search() {
       setLoading(true);
       setShowMore(false);
       const searchQuery = urlParams.toString();
-      const res = await fetch(`${BACKEND_URL}/api/listing/get?${searchQuery}`);
+      const res = await fetch(`${BACKEND_URL}/api/listing/get?${searchQuery}`,
+        {
+          credentials: "include",
+        });
       const data = await res.json();
 
       if (data.length > 8) {

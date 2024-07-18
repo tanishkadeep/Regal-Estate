@@ -35,7 +35,10 @@ export default function Listing() {
       try {
         setLoading(true);
         const res = await fetch(
-          `${BACKEND_URL}/api/listing/get/${params.listingId}`
+          `${BACKEND_URL}/api/listing/get/${params.listingId}`,
+          {
+            credentials: "include",
+          }
         );
         const data = await res.json();
         if (data.success === false) {
